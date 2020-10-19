@@ -49,17 +49,17 @@ function addRole() {
         {
           name: "title",
           type: "input",
-          message: "What role title are you adding?",
+          message: "What role are you adding?",
         },
         {
           name: "salary",
           type: "input",
-          message: "What is the salary for this position?",
+          message: "What is the salary for this role?",
         },
         {
           name: "departmentId",
           type: "input",
-          message: "What departmentID are we adding?",
+          message: "What departmentID belongs to this role?",
         }
       ])
       .then(function(answer) {
@@ -74,6 +74,30 @@ function addRole() {
           function(err) {
             if (err) throw err;
             console.log("Role Added!");
+            runPrompt();
+          }
+        );
+      });
+  }
+
+  function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "department",
+          type: "input",
+          message: "What department are you adding?",
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "INSERT INTO department SET ?",
+          {
+            name: answer.department
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Your department was added!");
             runPrompt();
           }
         );
