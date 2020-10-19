@@ -1,0 +1,26 @@
+{
+  "name": "employeelog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bowerpower85/EmployeeLog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bowerpower85/EmployeeLog/issues"
+  },
+  "homepage": "https://github.com/Bowerpower85/EmployeeLog#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "ctable": "0.0.3",
+    "inquirer": "^7.3.3",
+    "mysql": "^2.18.1"
+  }
+}
