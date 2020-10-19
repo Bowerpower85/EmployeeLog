@@ -43,3 +43,39 @@ function runPrompt() {
         });
 }
 
+function addRole() {
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "What role title are you adding?",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary for this position?",
+        },
+        {
+          name: "departmentId",
+          type: "input",
+          message: "What departmentID are we adding?",
+        }
+      ])
+      .then(function(answer) {
+
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: answer.title,
+            salary: answer.salary,
+            department_id: answer.departmentId
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Role Added!");
+            runPrompt();
+          }
+        );
+      });
+  }
