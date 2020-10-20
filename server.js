@@ -103,3 +103,45 @@ function addRole() {
         );
       });
   }
+
+  function addEmployee() {
+    inquirer
+      .prompt([
+        {
+          name: "first",
+          type: "input",
+          message: "What is the first name of the employee?",
+        },
+        {
+          name: "last",
+          type: "input",
+          message: "What is the last name of the employee?",
+        },
+        {
+          name: "roleId",
+          type: "input",
+          message: "What role Id number does the employee have?"
+        },
+        {
+          name: "managerId",
+          type: "input",
+          message: "What is the manager ID number for the employee? If none write 0.",
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "INSERT INTO employee SET ?",
+          {
+            first_name: answer.first,
+            last_name: answer.last,
+            role_id: answer.roleId,
+            manager_id: answer.managerId
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Employee Added!");
+            runPrompt();
+          }
+        );
+      });
+  }
