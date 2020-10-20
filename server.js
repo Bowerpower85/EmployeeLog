@@ -35,7 +35,7 @@ function runPrompt() {
                 addEmployee();
             }
             else if(promptOptions.create === "View") {
-                viewData();
+                viewLog();
             }
             else{
                 connection.end();
@@ -146,12 +146,12 @@ function addRole() {
       });
   }
 
-  function viewData() {
+  function viewLog() {
     inquirer
       .prompt({
         name: "table",
         type: "list",
-        message: "What table would you like to view?",
+        message: "What would you like to review?",
         choices: ["Department", "Role", "Employee"]
       })
       .then(function(answer) {
@@ -170,26 +170,4 @@ function addRole() {
       });
   }
 
-  function viewData() {
-    inquirer
-      .prompt({
-        name: "table",
-        type: "list",
-        message: "What table would you like to view?",
-        choices: ["Department", "Role", "Employee"]
-      })
-      .then(function(answer) {
-        if (answer.table === "Department") {
-          viewDepartment();
-        }
-        else if(answer.table === "Role") {
-          viewRole();
-        } 
-        else if(answer.table === "Employee") {
-          viewEmployee();
-        }
-        else{
-          connection.end();
-        }
-      });
-  }
+  
