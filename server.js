@@ -19,22 +19,22 @@ connection.connect((err) => {
 function runPrompt() {
     inquirer
     .prompt({
-      name: "create",
-      type: "list",
-      message: "Create a [Department], a [Role], an [Employee] or [View] the following:",
-            choices: ["Department", "Role", "Employee", "View"]
+      name: 'create',
+      type: 'list',
+      message: 'Create a [Department], a [Role], an [Employee] or [View] the following:',
+            choices: ['Department', 'Role', 'Employee', 'View']
         })
         .then(function(promptOptions){
-            if (promptOptions.create === "Department") {
+            if (promptOptions.create === 'Department') {
                 addDepartment();
             }
-            else if(promptOptions.create === "Role") {
+            else if(promptOptions.create === 'Role') {
                 addRole();
             }
-            else if(promptOptions.create === "Employee") {
+            else if(promptOptions.create === 'Employee') {
                 addEmployee();
             }
-            else if(promptOptions.create === "View") {
+            else if(promptOptions.create === 'View') {
                 viewLog();
             }
             else{
@@ -47,25 +47,25 @@ function addRole() {
     inquirer
       .prompt([
         {
-          name: "title",
-          type: "input",
-          message: "What role are you adding?",
+          name: 'title',
+          type: 'input',
+          message: 'What role are you adding?',
         },
         {
-          name: "salary",
-          type: "input",
-          message: "What is the salary for this role?",
+          name: 'salary',
+          type: 'input',
+          message: 'What is the salary for this role?',
         },
         {
-          name: "departmentId",
-          type: "input",
-          message: "What departmentID belongs to this role?",
+          name: 'departmentId',
+          type: 'input',
+          message: 'What departmentID belongs to this role?',
         }
       ])
       .then(function(answer) {
 
         connection.query(
-          "INSERT INTO role SET ?",
+          'INSERT INTO role SET ?',
           {
             title: answer.title,
             salary: answer.salary,
@@ -73,7 +73,7 @@ function addRole() {
           },
           function(err) {
             if (err) throw err;
-            console.log("Role Added!");
+            console.log('Role Added!');
             runPrompt();
           }
         );
@@ -84,20 +84,20 @@ function addRole() {
     inquirer
       .prompt([
         {
-          name: "department",
-          type: "input",
-          message: "What department are you adding?",
+          name: 'department',
+          type: 'input',
+          message: 'What department are you adding?',
         }
       ])
       .then(function(answer) {
         connection.query(
-          "INSERT INTO department SET ?",
+          'INSERT INTO department SET ?',
           {
             name: answer.department
           },
           function(err) {
             if (err) throw err;
-            console.log("Your department was added!");
+            console.log('Your department was added!');
             runPrompt();
           }
         );
@@ -108,29 +108,29 @@ function addRole() {
     inquirer
       .prompt([
         {
-          name: "first",
-          type: "input",
-          message: "What is the first name of the employee?",
+          name: 'first',
+          type: 'input',
+          message: 'What is the first name of the employee?',
         },
         {
-          name: "last",
-          type: "input",
-          message: "What is the last name of the employee?",
+          name: 'last',
+          type: 'input',
+          message: 'What is the last name of the employee?',
         },
         {
-          name: "roleId",
-          type: "input",
-          message: "What role Id number does the employee have?"
+          name: 'roleId',
+          type: 'input',
+          message: 'What role Id number does the employee have?'
         },
         {
-          name: "managerId",
-          type: "input",
-          message: "What is the manager ID number for the employee? If none write 0.",
+          name: 'managerId',
+          type: 'input',
+          message: 'What is the manager ID number for the employee? If none write 0.',
         }
       ])
       .then(function(answer) {
         connection.query(
-          "INSERT INTO employee SET ?",
+          'INSERT INTO employee SET ?',
           {
             first_name: answer.first,
             last_name: answer.last,
@@ -139,7 +139,7 @@ function addRole() {
           },
           function(err) {
             if (err) throw err;
-            console.log("Employee Added!");
+            console.log('Employee Added!');
             runPrompt();
           }
         );
@@ -149,19 +149,19 @@ function addRole() {
   function viewLog() {
     inquirer
       .prompt({
-        name: "table",
-        type: "list",
-        message: "What would you like to review?",
-        choices: ["Department", "Role", "Employee"]
+        name: 'table',
+        type: 'list',
+        message: 'What would you like to review?',
+        choices: ['Department', 'Role', 'Employee']
       })
       .then(function(answer) {
-        if (answer.table === "Department") {
+        if (answer.table === 'Department') {
           viewDepartment();
         }
-        else if(answer.table === "Role") {
+        else if(answer.table === 'Role') {
           viewRole();
         } 
-        else if(answer.table === "Employee") {
+        else if(answer.table === 'Employee') {
           viewEmployee();
         }
         else{
@@ -170,4 +170,27 @@ function addRole() {
       });
   }
 
+  function viewRole() {
+    connection.query('SELECT * FROM role', function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      runPrompt();
+    })
+  };
+
+  function viewDepartment() {
+    connection.query('SELECT * FROM department', function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      runPrompt();
+    })
+  };
+
+  function viewEmployee() {
+    connection.query('SELECT * FROM employee', function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      runPrompt();
+    })
+  }; 
   
